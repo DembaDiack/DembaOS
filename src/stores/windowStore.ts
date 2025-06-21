@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
 
 export interface WindowData {
   id: string;
@@ -15,41 +14,34 @@ interface WindowStore {
   removeWindow: (id: string) => void;
 }
 
-export const useWindowStore = create<WindowStore>()(
-  persist(
-    (set) => ({
-      windows: [],
+export const useWindowStore = create<WindowStore>()((set) => ({
+    windows: [],
 
-      updateWindowId: (oldId, newId) => {
+    updateWindowId: (oldId, newId) => {
         set((state) => ({
-          windows: state.windows.map((w) =>
-            w.id === oldId ? { ...w, id: newId } : w
-          ),
+            windows: state.windows.map((w) =>
+                w.id === oldId ? { ...w, id: newId } : w
+            ),
         }));
-      },
+    },
 
-      updateWindowIndex: (id, newIndex) => {
+    updateWindowIndex: (id, newIndex) => {
         set((state) => ({
-          windows: state.windows.map((w) =>
-            w.id === id ? { ...w, index: newIndex } : w
-          ),
+            windows: state.windows.map((w) =>
+                w.id === id ? { ...w, index: newIndex } : w
+            ),
         }));
-      },
+    },
 
-      addWindow: (window) => {
+    addWindow: (window) => {
         set((state) => ({
-          windows: [...state.windows, window],
+            windows: [...state.windows, window],
         }));
-      },
+    },
 
-      removeWindow: (id) => {
+    removeWindow: (id) => {
         set((state) => ({
-          windows: state.windows.filter((w) => w.id !== id),
+            windows: state.windows.filter((w) => w.id !== id),
         }));
-      },
-    }),
-    {
-      name: "window-storage",
-    }
-  )
-);
+    },
+}));
