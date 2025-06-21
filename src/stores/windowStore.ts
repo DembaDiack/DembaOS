@@ -12,7 +12,6 @@ interface WindowStore {
   windows: WindowData[];
   updateWindowId: (oldId: string, newId: string) => void;
   updateWindowIndex: (id: string, newIndex: number) => void;
-  updateWindowLastPosition: (id: string, x: number, y: number) => void;
   addWindow: (window: WindowData) => void;
   removeWindow: (id: string) => void;
 }
@@ -47,15 +46,6 @@ export const useWindowStore = create<WindowStore>()(
       removeWindow: (id) => {
         set((state) => ({
           windows: state.windows.filter((w) => w.id !== id),
-        }));
-      },
-
-      updateWindowLastPosition: (id, x, y) => {
-        console.log(`Updating position for window ${id}: (${x}, ${y})`);
-        set((state) => ({
-          windows: state.windows.map((w) =>
-            w.id === id ? { ...w, lastX: x, lastY: y } : w
-          ),
         }));
       },
     }),

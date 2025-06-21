@@ -1,14 +1,12 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import React, { useRef, useState, type PropsWithChildren } from "react";
+import React, { useRef, type PropsWithChildren } from "react";
 import Bar from "./Bar";
 
 interface IWindow {
   id: string;
   index: number;
   onClickWindow?: (id: string, index: number) => void;
-  lastX?: number;
-  lastY?: number;
 }
 
 const Window: React.FC<PropsWithChildren<IWindow>> = ({
@@ -16,8 +14,6 @@ const Window: React.FC<PropsWithChildren<IWindow>> = ({
   index,
   children,
   onClickWindow,
-  lastX = 0,
-  lastY = 0,
 }) => {
   const width = 800;
   const height = 500;
@@ -42,10 +38,8 @@ const Window: React.FC<PropsWithChildren<IWindow>> = ({
     );
   }, []);
 
-  console.log("lastX:", lastX, "lastY:", lastY);
-
-  const [x] = useState(lastX ? lastX : window.innerWidth / 2 - width / 2);
-  const [y] = useState(lastY ? lastY : window.innerHeight / 2 - height / 2);
+  const x = window.innerWidth / 2 - width / 2;
+  const y = window.innerHeight / 2 - height / 2;
 
   return (
     <div

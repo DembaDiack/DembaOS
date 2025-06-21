@@ -25,8 +25,6 @@ export const App = () => {
             onClickWindow={(id) => {
               bringToFront(id);
             }}
-            lastX={w.lastX}
-            lastY={w.lastY}
           ></Window>
         ))}
       </Desktop>
