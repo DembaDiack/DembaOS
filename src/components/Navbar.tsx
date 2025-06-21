@@ -1,9 +1,7 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useState } from "react";
 
 export const Navbar = () => {
-  const [expanded, setExpanded] = useState(false);
 
   useGSAP(() => {
     gsap.from("#navbar", {

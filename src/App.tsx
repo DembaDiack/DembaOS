@@ -4,12 +4,20 @@ import { DrawSVGPlugin, SplitText } from "gsap/all";
 import MenuButton from "./components/MenuButton";
 import MenuItem from "./components/MenuItem";
 import Desktop from "./components/Desktop";
+import { useWindowManager } from "./hooks/useWindowManager";
+import Window from "./components/Window/Window";
 
 gsap.registerPlugin(DrawSVGPlugin);
 gsap.registerPlugin(SplitText);
 gsap.registerPlugin(useGSAP);
 
 export const App = () => {
+  const { windows, openWindow, bringToFront } = useWindowManager();
+
+  const handleOpenWindow = (windowId: string) => {
+    openWindow(windowId);
+  };
+
   return (
     <div>
       {/* <Cursor /> */}
@@ -18,14 +26,24 @@ export const App = () => {
         <div className="h-[35px] bg-stone-100 shadow-lg pl-5 pr-5 grid grid-cols-[70%_30%] items-center ">
           <div className="flex gap-2">
             <MenuButton title="Demba">
-              <MenuItem>Read me</MenuItem>
+              <MenuItem onClick={() => handleOpenWindow("readme")}>
+                Read me
+              </MenuItem>
             </MenuButton>
             <MenuButton title="Work">
-              <MenuItem>Portfolio</MenuItem>
-              <MenuItem>Projects</MenuItem>
-              <MenuItem>Blog</MenuItem>
-              <MenuItem>Contact</MenuItem>
-              <MenuItem>Resume</MenuItem>
+              <MenuItem onClick={() => handleOpenWindow("portfolio")}>
+                Portfolio
+              </MenuItem>
+              <MenuItem onClick={() => handleOpenWindow("projects")}>
+                Projects
+              </MenuItem>
+              <MenuItem onClick={() => handleOpenWindow("blog")}>Blog</MenuItem>
+              <MenuItem onClick={() => handleOpenWindow("contact")}>
+                Contact
+              </MenuItem>
+              <MenuItem onClick={() => handleOpenWindow("resume")}>
+                Resume
+              </MenuItem>
             </MenuButton>
             <MenuButton title="Social">
               <MenuItem>Twitter</MenuItem>
@@ -51,6 +69,19 @@ export const App = () => {
             })}
           </div>
         </div>
+
+        {windows.map((w) => (
+          <Window
+            key={w.id}
+            id={w.id}
+            index={w.index}
+            onClickWindow={(id) => {
+              bringToFront(id);
+            }}
+          >
+            {w.id} (index: {w.index})
+          </Window>
+        ))}
       </Desktop>
     </div>
   );
