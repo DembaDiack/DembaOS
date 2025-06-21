@@ -4,6 +4,7 @@ import { persist } from "zustand/middleware";
 export interface WindowData {
   id: string;
   index: number;
+  child: React.ReactNode;
 }
 
 interface WindowStore {

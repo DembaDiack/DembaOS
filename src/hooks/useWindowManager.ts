@@ -8,15 +8,14 @@ export const useWindowManager = () => {
     removeWindow,
     updateWindowId,
     updateWindowIndex,
-    updateWindowLastPosition,
   } = useWindowStore();
 
-  const openWindow = (id: string) => {
+  const openWindow = (id: string, child: React.ReactNode) => {
     const existingWindow = windows.find((w) => w.id === id);
     if (!existingWindow) {
       const newIndex =
         windows.length > 0 ? Math.max(...windows.map((w) => w.index)) + 1 : 1;
-      addWindow({ id, index: newIndex });
+      addWindow({ id, index: newIndex, child });
     } else {
       // Bring to front
       const newIndex = Math.max(...windows.map((w) => w.index)) + 1;
@@ -54,6 +53,5 @@ export const useWindowManager = () => {
     getTopWindow,
     updateWindowId,
     updateWindowIndex,
-    updateWindowLastPosition,
   };
 };

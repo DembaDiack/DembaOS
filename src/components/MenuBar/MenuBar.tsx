@@ -6,7 +6,7 @@ const MenuBar = () => {
   const { openWindow } = useWindowManager();
 
   const handleOpenWindow = (windowId: string) => {
-    openWindow(windowId);
+    openWindow(windowId, <div>{windowId} content goes here</div>);
   };
   return (
     <div className="h-[35px] bg-stone-100 shadow-lg pl-5 pr-5 grid grid-cols-[70%_30%] items-center ">
