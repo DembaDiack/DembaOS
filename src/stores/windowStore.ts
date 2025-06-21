@@ -4,8 +4,6 @@ import { persist } from "zustand/middleware";
 export interface WindowData {
   id: string;
   index: number;
-  lastX?: number;
-  lastY?: number;
 }
 
 interface WindowStore {
