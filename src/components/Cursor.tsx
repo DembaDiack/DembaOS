@@ -41,7 +41,7 @@ function Cursor() {
     <div
       ref={ref}
       id="cursor"
-      className="fixed w-[16px] h-[16px] mix-blend-difference bg-white rounded-full pointer-events-none z-50"
+      className="fixed w-[12px] h-[12px] mix-blend-difference bg-white rounded-full pointer-events-none z-50"
     ></div>
   );
 }

@@ -1,10 +1,10 @@
 import { useRef, useState } from "react";
-import GlowingBall from "./GlowingBall";
-import useMouseData from "../../hooks/useMouseData";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import useMouseData from "../hooks/useMouseData";
+import GlowingBall from "./GlowingBall";
 
-const MetalPaper: React.FC<
+const Metal: React.FC<
   React.PropsWithChildren<
     React.JSX.IntrinsicAttributes &
       React.ClassAttributes<HTMLDivElement> &
@@ -52,11 +52,9 @@ const MetalPaper: React.FC<
         />
       }
 
-      <div className={`relative z-10 p-4 ${className ?? ""}`}>
-        {children}
-      </div>
+      <div className={`relative z-10 p-4 ${className ?? ""}`}>{children}</div>
     </div>
   );
 };
 
-export default MetalPaper;
+export default Metal;
