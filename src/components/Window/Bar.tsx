@@ -1,6 +1,8 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { useWindowManager } from "../../hooks/useWindowManager";
+import { useDebounceCallback } from "usehooks-ts";
 
 interface IBar {
   windowId: string;
@@ -11,16 +13,18 @@ interface IBar {
 const barHeight = 25;
 
 const Bar: React.FC<IBar> = ({ windowId }) => {
+  const { updateWindowLastPosition } = useWindowManager();
+
+  const debouncedUpdatePosition = useDebounceCallback(
+    updateWindowLastPosition,
+    1000 // Debounce for 1 second
+  );
+
   const ref = useRef<HTMLDivElement>(null);
   const dragOffset = useRef({ x: 0, y: 0 });
-  useGSAP(() => {
-    if (!ref.current) return;    ref.current.addEventListener("click", (e) => {
-      const rect = ref.current?.getBoundingClientRect();
-      if (!rect) return;
-      const distance = rect.x + rect.width;
 
-      console.log(distance, distance / 2, e.clientX);
-    });
+  useGSAP(() => {
+    if (!ref.current) return;
 
     ref.current?.addEventListener("dragstart", (e) => {
       e?.dataTransfer?.setDragImage(new Image(), 0, 0); // Disable drag ghost
@@ -38,10 +42,13 @@ const Bar: React.FC<IBar> = ({ windowId }) => {
     ref.current?.addEventListener("drag", (e) => {
       if (e.clientX === 0 && e.clientY === 0) return; // Ignore if no movement
 
+      const newX = e.clientX - dragOffset.current.x;
+      const newY = e.clientY - dragOffset.current.y;
+
+      debouncedUpdatePosition(windowId.replace("#", ""), newX, newY);
+
       gsap.to(windowId, {
-        transform: `translate(${e.clientX - dragOffset.current.x}px, ${
-          e.clientY - dragOffset.current.y
-        }px)`,
+        transform: `translate(${newX}px, ${newY}px)`,
       });
     });
   }, []);

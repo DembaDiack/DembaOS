@@ -1,4 +1,4 @@
-import { useWindowStore } from '../stores/windowStore';
+import { useWindowStore } from "../stores/windowStore";
 
 // Example hook showing how to use the window store
 export const useWindowManager = () => {
@@ -7,17 +7,19 @@ export const useWindowManager = () => {
     addWindow,
     removeWindow,
     updateWindowId,
-    updateWindowIndex
+    updateWindowIndex,
+    updateWindowLastPosition,
   } = useWindowStore();
 
   const openWindow = (id: string) => {
-    const existingWindow = windows.find(w => w.id === id);
+    const existingWindow = windows.find((w) => w.id === id);
     if (!existingWindow) {
-      const newIndex = windows.length > 0 ? Math.max(...windows.map(w => w.index)) + 1 : 1;
+      const newIndex =
+        windows.length > 0 ? Math.max(...windows.map((w) => w.index)) + 1 : 1;
       addWindow({ id, index: newIndex });
     } else {
       // Bring to front
-      const newIndex = Math.max(...windows.map(w => w.index)) + 1;
+      const newIndex = Math.max(...windows.map((w) => w.index)) + 1;
       updateWindowIndex(id, newIndex);
     }
   };
@@ -28,12 +30,12 @@ export const useWindowManager = () => {
 
   const bringToFront = (id: string) => {
     if (windows.length === 0) return;
-    const newIndex = Math.max(...windows.map(w => w.index)) + 1;
+    const newIndex = Math.max(...windows.map((w) => w.index)) + 1;
     updateWindowIndex(id, newIndex);
   };
 
   const getWindowById = (id: string) => {
-    return windows.find(w => w.id === id);
+    return windows.find((w) => w.id === id);
   };
 
   const getTopWindow = () => {
@@ -51,6 +53,7 @@ export const useWindowManager = () => {
     getWindowById,
     getTopWindow,
     updateWindowId,
-    updateWindowIndex
+    updateWindowIndex,
+    updateWindowLastPosition,
   };
 };
