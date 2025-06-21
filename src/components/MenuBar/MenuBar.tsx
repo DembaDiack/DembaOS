@@ -1,13 +1,22 @@
 import MenuButton from "../MenuButton";
 import MenuItem from "../MenuItem";
 import { useWindowManager } from "../../hooks/useWindowManager";
+import DadjokeGenerator from "../DadjokeGenerator/DadjokeGenerator";
 
 const MenuBar = () => {
   const { openWindow } = useWindowManager();
 
   const handleOpenWindow = (windowId: string) => {
-    openWindow(windowId, <div>{windowId} content goes here</div>);
+    openWindow(
+      windowId,
+      <div className="w-[500px]">{windowId} content goes here</div>
+    );
   };
+
+  const handleOpenDadJokeGenerator = () => {
+    openWindow("dadjoke", <DadjokeGenerator />);
+  };
+
   return (
     <div className="h-[35px] bg-stone-100 shadow-lg pl-5 pr-5 grid grid-cols-[70%_30%] items-center ">
       <div className="flex gap-2">
@@ -42,6 +51,11 @@ const MenuBar = () => {
           <MenuItem>Tailwind CSS</MenuItem>
           <MenuItem>TypeScript</MenuItem>
           <MenuItem>JavaScript</MenuItem>
+        </MenuButton>
+        <MenuButton title="tools">
+          <MenuItem onClick={() => handleOpenDadJokeGenerator()}>
+            Dadjoke generator
+          </MenuItem>
         </MenuButton>
       </div>
       <div className="flex justify-end">

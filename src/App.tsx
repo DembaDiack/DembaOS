@@ -25,7 +25,9 @@ export const App = () => {
             onClickWindow={(id) => {
               bringToFront(id);
             }}
-          ></Window>
+          >
+            {w.child}
+          </Window>
         ))}
       </Desktop>
     </div>
